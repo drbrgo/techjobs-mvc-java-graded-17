@@ -30,9 +30,9 @@ public class SearchController {
     //i had a lot of trouble here due to small errors in the return statement and the configuration of the mapping route.
     //accidentally returning to /search/search/results, and then search/results (by using "/results").
     //Then i remembered that i needed to return the template name and path ("search")
-    //and that the post mapping needed to match the template (/search/results)
+    //and that the post mapping needed to match the post action of the template (/search/results)
     @PostMapping("results")
-    public String displaySearchResults(@RequestParam String searchType, @RequestParam String searchTerm, Model model) {
+    public String displaySearchResults(String searchType, String searchTerm, Model model) {
         ArrayList<Job>jobs = new ArrayList<>();
 //        if(searchTerm == "all" || searchTerm.isBlank()){
 //            jobs = JobData.findAll();
