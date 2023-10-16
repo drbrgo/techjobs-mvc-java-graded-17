@@ -21,6 +21,7 @@ public class SearchController {
     @GetMapping(value = "")
     public String search(Model model) {
         model.addAttribute("columns", columnChoices);
+//        model.addAttribute(new Job());
         return "search";
     }
 
@@ -32,7 +33,7 @@ public class SearchController {
     //Then i remembered that i needed to return the template name and path ("search")
     //and that the post mapping needed to match the post action of the template (/search/results)
     @PostMapping("results")
-    public String displaySearchResults(String searchType, String searchTerm, Model model) {
+    public String displaySearchResults(Model model, String searchType, String searchTerm) {
         ArrayList<Job>jobs = new ArrayList<>();
 //        if(searchTerm == "all" || searchTerm.isBlank()){
 //            jobs = JobData.findAll();
@@ -40,10 +41,14 @@ public class SearchController {
         //why is this conditional redundant? -- b/c findbycolumnandvalue includes that conditional
 
         jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+        String choice = columnChoices.values().toString().toLowerCase();
 
         model.addAttribute("jobs", jobs);
         model.addAttribute("columns", columnChoices);
         model.addAttribute("title", searchTerm);
+        model.addAttribute("choice", choice);
+        //trying to pass in a new variable to the model so that I can ensure the previous search field remains
+        //selected after submitting the form. so far no luck.
         return "search";
         //return "Hello, duck.";
     }
